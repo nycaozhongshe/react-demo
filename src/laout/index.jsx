@@ -2,7 +2,7 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:33 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 17:51:25
+ * @Last Modified time: 2018-08-31 18:32:55
  */
 
 import React, { Component } from 'react';
@@ -60,7 +60,10 @@ class ErrorPage extends Component {
         <div className="header">
           头部
         </div>
-        {this.props.children}
+
+        <div>
+          {this.props.children}
+        </div>
         <div className="footer">
           底部
         </div>

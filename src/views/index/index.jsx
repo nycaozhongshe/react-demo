@@ -2,11 +2,11 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:33 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 14:28:22
+ * @Last Modified time: 2018-08-31 18:32:28
  */
 
 import React, { Component } from 'react';
-
+import Button from 'antd/lib/button';
 
 class Index extends Component {
   //初始化props
@@ -57,7 +57,9 @@ class Index extends Component {
     console.log('render');
     return (
       <div className="Laout">
-        Index
+        <Button type="primary">
+          内容
+        </Button>
       </div>
     );
   }
