@@ -2,10 +2,11 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:28:57 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 18:17:51
+ * @Last Modified time: 2018-08-31 23:07:18
  */
 
 import React, { Component } from 'react';
+import { Provider } from 'react-redux'
 
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -17,7 +18,11 @@ import Index from './views/index/index.jsx'
 import Tab from './views/tab/index.jsx'
 import ErrorPage from './views/404/index.jsx'
 
+import configStroe from './redux/store'
 
+const store = configStroe()
+
+console.log(configStroe());
 
 class App extends Component {
   constructor() {
@@ -50,12 +55,14 @@ class App extends Component {
       </Layout>
     );
     return (
-      <Router>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/" render={props => LayoutRouter} />
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/" render={props => LayoutRouter} />
+          </Switch>
+        </Router>
+      </Provider>
     );
   }
 }
