@@ -2,7 +2,7 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:28:57 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 18:17:51
+ * @Last Modified time: 2018-09-02 14:53:02
  */
 
 import React, { Component } from 'react';
@@ -17,7 +17,7 @@ import Index from './views/index/index.jsx'
 import Tab from './views/tab/index.jsx'
 import ErrorPage from './views/404/index.jsx'
 
-
+import { state } from './redux/state'
 
 class App extends Component {
   constructor() {
