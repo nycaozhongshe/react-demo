@@ -2,7 +2,7 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:33 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-09-02 17:27:28
+ * @Last Modified time: 2018-09-02 17:50:32
  */
 
 import React, { Component } from 'react';
@@ -11,15 +11,18 @@ import { connect } from 'react-redux';
 
 import propTypes from 'prop-types';
 
+import { bindActionCreators } from 'redux';
 import { min, plus } from '../../redux/actions/counter'
-// import { bindActionCreators } from 'redux';
 
+const mapDispathToProps = (dispath) => {
+  return bindActionCreators({ min, plus }, dispath)
+}
 const mapStateToProps = (state) => {
   return {
     counter: state.counter
   }
 }
-@connect(mapStateToProps, { min, plus })
+@connect(mapStateToProps, mapDispathToProps)
 class Index extends Component {
   static propTypes = {
     counter: propTypes.number.isRequired
@@ -38,6 +41,7 @@ class Index extends Component {
     })
   }
   render() {
+    console.log(this.props)
     return (
       <div className="Laout">
         <span>{this.props.counter}</span>
@@ -58,9 +62,7 @@ class Index extends Component {
 }
 
 // bindActionCreators
-// const mapDispathToProps = (dispath) => {
-//   return bindActionCreators({},dispath)
-// }
+
 
 export default Index;
 
