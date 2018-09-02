@@ -2,14 +2,14 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:28:57 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-09-02 14:53:02
+ * @Last Modified time: 2018-09-02 16:50:12
  */
 
 import React, { Component } from 'react';
 
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-
+import { Provider } from "react-redux";
 
 import Login from './views/login/index.jsx'
 import Layout from './laout/index.jsx'
@@ -17,7 +17,7 @@ import Index from './views/index/index.jsx'
 import Tab from './views/tab/index.jsx'
 import ErrorPage from './views/404/index.jsx'
 
-import { state } from './redux/state'
+import store from "./redux/store";
 
 class App extends Component {
   constructor() {
@@ -50,12 +50,14 @@ class App extends Component {
       </Layout>
     );
     return (
-      <Router>
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/" render={props => LayoutRouter} />
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router >
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/" render={props => LayoutRouter} />
+          </Switch>
+        </Router>
+      </Provider>
     );
   }
 }
