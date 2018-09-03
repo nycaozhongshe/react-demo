@@ -2,7 +2,7 @@ import axios from 'axios';
 import { message as Message } from 'antd';
 // 创建axios实例
 const service = axios.create({
-  timeout: 4000, // 请求超时时间
+  timeout: 10000, // 请求超时时间
 });
 
 let interceptor = response => {

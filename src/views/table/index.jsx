@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { Table, Divider } from 'antd';
-
+import { Table, Divider, Button, Modal } from 'antd';
 import { getRecruitCityList, createOrUpdateRecruitCity, delRecruitCity } from "@/api/city";
+
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: []
+      data: [],
+      visible: false
     }
   }
   componentWillMount() {
@@ -17,9 +18,33 @@ class App extends Component {
   componentWillReceiveProps() { }
   componentWillUnmount() { }
 
-  handleClick() {
+  handleEdit() {
     console.log(this)
   }
+  handleDel() {
+    this.delRecruitCity()
+  }
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+
+  hideModal = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+  delRecruitCity() {
+    delRecruitCity({})
+      .then(res => {
+        console.log(res)
+      }).catch(e => {
+        console.log(e)
+      })
+  }
+
+
   getRecruitCityList() {
     getRecruitCityList({}).then(
       res => {
@@ -55,9 +80,9 @@ class App extends Component {
       render: (text, record) => {
         return (
           <span>
-            <a onClick={() => { this.handleClick() }}>Invite {record.name}</a>
+            <Button type="primary" onClick={this.showModal}>编辑</Button>
             <Divider type="vertical" />
-            <a >Delete</a>
+            <Button type="danger" onClick={() => { this.handleDel() }}>删除</Button>
           </span>
         )
       },
@@ -65,7 +90,19 @@ class App extends Component {
 
     return (
       <div>
-        <Table columns={columns} dataSource={this.state.data}  rowKey="id" />
+        <Table columns={columns} dataSource={this.state.data} rowKey="id" />
+        <Modal
+          title="Modal"
+          visible={this.state.visible}
+          onOk={this.hideModal}
+          onCancel={this.hideModal}
+          okText="确认"
+          cancelText="取消"
+        >
+          <p>Bla bla ...</p>
+          <p>Bla bla ...</p>
+          <p>Bla bla ...</p>
+        </Modal>
       </div>
     )
   }
