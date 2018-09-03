@@ -2,20 +2,42 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:18 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 16:58:33
+ * @Last Modified time: 2018-09-03 15:21:41
  */
 
-import React from 'react';
 
 
-import { Switch, Route, Redirect } from 'react-router-dom'
+import React, { Component } from 'react'
 
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { asyncComponent } from "@/components/AsyncComponent";
 
+import App from "@/App.jsx";
+const Layout = asyncComponent(() => import('@/laout/index.jsx'))
+const Login = asyncComponent(() => import('@/views/login/index.jsx'))
+const Index = asyncComponent(() => import('@/views/index/index.jsx'))
+const Tab = asyncComponent(() => import('@/views/tab/index.jsx'))
 
+export default class ERouter extends Component {
 
-
-
-
-
-
-export default LayoutRouter
+  render() {
+    return (
+      <HashRouter>
+        <App>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/" render={() =>
+              <Layout>
+                <Switch>
+                  <Route path='/index' component={Index} />
+                  <Route path="/tab" component={Tab} />
+                  <Redirect to="/index" />
+                </Switch>
+              </Layout>
+            } />
+          </Switch>
+        </App>
+      </HashRouter>
+    );
+  }
+}
