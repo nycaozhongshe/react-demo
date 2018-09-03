@@ -2,7 +2,7 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:18 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-09-03 15:21:41
+ * @Last Modified time: 2018-09-03 16:11:04
  */
 
 
@@ -18,6 +18,9 @@ const Login = asyncComponent(() => import('@/views/login/index.jsx'))
 const Index = asyncComponent(() => import('@/views/index/index.jsx'))
 const Tab = asyncComponent(() => import('@/views/tab/index.jsx'))
 
+const Table = asyncComponent(() => import('@/views/table/index.jsx'))
+
+
 export default class ERouter extends Component {
 
   render() {
@@ -31,6 +34,7 @@ export default class ERouter extends Component {
                 <Switch>
                   <Route path='/index' component={Index} />
                   <Route path="/tab" component={Tab} />
+                  <Route path="/table" component={Table} />
                   <Redirect to="/index" />
                 </Switch>
               </Layout>
