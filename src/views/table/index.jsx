@@ -1,65 +1,109 @@
-/*
- * @Author: caozhongshe 
- * @Date: 2018-08-31 11:29:33 
- * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 14:37:06
- */
+import React, { Component } from 'react'
+import { Table, Divider, Button, Modal } from 'antd';
+import { getRecruitCityList,  delRecruitCity } from "@/api/city";
 
-import React, { Component } from 'react';
-
-
-class Login extends Component {
-  //初始化props
+class App extends Component {
   constructor(props) {
     super(props)
-    console.log('constructor', props);
     this.state = {
-      data: 1
+      data: [],
+      visible: false
     }
   }
-  //初始化data
-  //组件将要加载
   componentWillMount() {
-    console.log('componentWillMount');
+    this.getRecruitCityList()
   }
-  //组件加载完成
-  componentDidMount() {
-    console.log('componentDidMount');
+  componentDidMount() { }
+  componentWillReceiveProps() { }
+  componentWillUnmount() { }
+
+  handleEdit() {
+    console.log(this)
   }
-  //将要接受父组件的props
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
+  handleDel() {
+    this.delRecruitCity()
   }
-  //子组件是否更新
-  shouldComponentUpdate() {
-    console.log('shouldComponentUpdate');
-    return true
-  }
-  //组件将要更新
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
-  //组件更新完成
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-  }
-  //组件即将销毁
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
-  }
-  /** 自定义事件 */
-  handleClick() {
+  showModal = () => {
     this.setState({
-      data: 2
-    })
+      visible: true,
+    });
+  }
+
+  hideModal = () => {
+    this.setState({
+      visible: false,
+    });
+  }
+  delRecruitCity() {
+    delRecruitCity({})
+      .then(res => {
+        console.log(res)
+      }).catch(e => {
+        console.log(e)
+      })
+  }
+
+
+  getRecruitCityList() {
+    getRecruitCityList({}).then(
+      res => {
+        this.setState({
+          data: res
+        })
+      }
+    ).catch(
+      e => {
+        console.log(e);
+      }
+    )
   }
   render() {
+    const columns = [{
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'sort',
+      dataIndex: 'sort',
+      key: 'sort',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => {
+        return (
+          <span>
+            <Button type="primary" onClick={this.showModal}>编辑</Button>
+            <Divider type="vertical" />
+            <Button type="danger" onClick={() => { this.handleDel() }}>删除</Button>
+          </span>
+        )
+      },
+    }];
+
     return (
-      <div className="Laout">
-        table
+      <div>
+        <Table columns={columns} dataSource={this.state.data} rowKey="id" />
+        <Modal
+          title="Modal"
+          visible={this.state.visible}
+          onOk={this.hideModal}
+          onCancel={this.hideModal}
+          okText="确认"
+          cancelText="取消"
+        >
+          <p>Bla bla ...</p>
+          <p>Bla bla ...</p>
+          <p>Bla bla ...</p>
+        </Modal>
       </div>
-    );
+    )
   }
 }
-
-export default Login;
+export default App;

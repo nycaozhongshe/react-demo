@@ -2,50 +2,37 @@
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:33 
  * @Last Modified by: caozhongshe
- * @Last Modified time: 2018-08-31 14:28:22
+ * @Last Modified time: 2018-09-02 17:50:32
  */
 
 import React, { Component } from 'react';
+import Button from 'antd/lib/button';
+import { connect } from 'react-redux';
 
+import propTypes from 'prop-types';
 
+import { bindActionCreators } from 'redux';
+import { min, plus } from '../../redux/actions/counter'
+
+const mapDispathToProps = (dispath) => {
+  return bindActionCreators({ min, plus }, dispath)
+}
+const mapStateToProps = (state) => {
+  return {
+    counter: state.counter
+  }
+}
+@connect(mapStateToProps, mapDispathToProps)
 class Index extends Component {
+  static propTypes = {
+    counter: propTypes.number.isRequired
+  }
   //初始化props
   constructor(props) {
     super(props)
-    console.log('constructor', props);
     this.state = {
       data: 1
     }
-  }
-  //初始化data
-  //组件将要加载
-  componentWillMount() {
-    console.log('componentWillMount');
-  }
-  //组件加载完成
-  componentDidMount() {
-    console.log('componentDidMount');
-  }
-  //将要接受父组件的props
-  componentWillReceiveProps() {
-    console.log('componentWillReceiveProps');
-  }
-  //子组件是否更新
-  shouldComponentUpdate() {
-    console.log('shouldComponentUpdate');
-    return true
-  }
-  //组件将要更新
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
-  //组件更新完成
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-  }
-  //组件即将销毁
-  componentWillUnmount() {
-    console.log('componentWillUnmount');
   }
   /** 自定义事件 */
   handleClick() {
@@ -54,13 +41,29 @@ class Index extends Component {
     })
   }
   render() {
-    console.log('render');
+    console.log(this.props)
     return (
       <div className="Laout">
-        Index
+        <span>{this.props.counter}</span>
+        <br />
+        <br />
+        <Button type="primary" onClick={() => { this.props.plus() }}>
+          增加
+        </Button>
+        <br />
+        <br />
+
+        <Button type="primary" onClick={() => { this.props.min() }}>
+          减少
+        </Button>
       </div>
     );
   }
 }
 
+// bindActionCreators
+
+
 export default Index;
+
+

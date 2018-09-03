@@ -1,14 +1,15 @@
 /*
  * @Author: caozhongshe 
  * @Date: 2018-08-31 11:29:09 
- * @Last Modified by:   caozhongshe 
- * @Last Modified time: 2018-08-31 11:29:09 
+ * @Last Modified by: caozhongshe
+ * @Last Modified time: 2018-09-03 15:31:01
  */
 
-
-
-#app{
-  &{
-    display: block;
-  }
+@import '~antd/dist/antd.css';
+html,
+body,
+.App,
+#root {
+  width: 100%;
+  height: 100%
 }
