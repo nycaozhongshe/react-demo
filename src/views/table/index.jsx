@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Table, Divider, Button, Modal } from 'antd';
-import { getRecruitCityList, createOrUpdateRecruitCity, delRecruitCity } from "@/api/city";
-
+import { getRecruitCityList,  delRecruitCity } from "@/api/city";
 
 class App extends Component {
   constructor(props) {
