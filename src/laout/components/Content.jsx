@@ -15,6 +15,7 @@ class App extends Component {
     return (
       <div className="content">
         {this.props.children}
+        
       </div>
     )
   }

@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
-import { Table, Divider, Button, message, Popconfirm } from 'antd';
+import { Table, Divider, Button, message, Popconfirm, Input } from 'antd';
 import { getRecruitCityList, delRecruitCity, createOrUpdateRecruitCity } from "@/api/city";
 import Edit from "./components/Edit";
+
+const Search = Input.Search;
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       data: [],
-      visible: false
+      visible: false,
+      searchKey: "name",
+      searchValue: "",
     }
   }
   componentWillMount() {
@@ -89,7 +93,13 @@ class App extends Component {
       // this.hideModal()
     });
   }
+  handleSearch = (val) => {
 
+    this.setState({
+      searchValue: val
+    })
+    console.log(this.state.searchValue);
+  }
   cancel(e) {
     message.error('Click on No');
   }
@@ -138,6 +148,11 @@ class App extends Component {
 
     return (
       <div>
+        <Search
+          placeholder="input search text"
+          onSearch={this.handleSearch}
+          enterButton
+        />
         <Table columns={columns} dataSource={this.state.data} rowKey="id" />
         <Edit
           wrappedComponentRef={this.saveFormRef}
