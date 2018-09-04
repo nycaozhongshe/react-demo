@@ -5,28 +5,13 @@ const service = axios.create({
   timeout: 10000, // 请求超时时间
 });
 
-let interceptor = response => {
-  if (response.data === 'INTERCEPT') {
-    Message.error('登陆超时');
-    window.location.href = '/login';
-    return false;
-  }
-  if (response.data.code === 1006) {
-    Message.error('密码错误');
-    return false;
-  } else if (response.data.code !== 0) {
-    Message.error('服务繁忙');
-    return false;
-  } else {
-    return true;
-  }
-};
+let interceptor = response => true;
+
 
 
 // request拦截器
 service.interceptors.request.use(
   config => {
-
     config.data = JSON.stringify(config.data);
     config.headers = { 'Content-Type': 'application/json' };
     Object.assign(config.headers, {

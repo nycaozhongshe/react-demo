@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Table, Divider, Button, Modal } from 'antd';
-import { getRecruitCityList,  delRecruitCity } from "@/api/city";
-
+import { Table, Divider, Button, message, Popconfirm } from 'antd';
+import { getRecruitCityList, delRecruitCity, createOrUpdateRecruitCity } from "@/api/city";
+import Edit from "./components/Edit";
 class App extends Component {
   constructor(props) {
     super(props)
@@ -21,28 +21,32 @@ class App extends Component {
     console.log(this)
   }
   handleDel() {
+    console.log(111)
     this.delRecruitCity()
   }
-  showModal = () => {
-    this.setState({
-      visible: true,
-    });
-  }
 
-  hideModal = () => {
-    this.setState({
-      visible: false,
-    });
-  }
   delRecruitCity() {
     delRecruitCity({})
       .then(res => {
-        console.log(res)
+        message.success("操作成功")
+        this.getRecruitCityList()
       }).catch(e => {
         console.log(e)
       })
   }
-
+  createOrUpdateRecruitCity(params) {
+    createOrUpdateRecruitCity(params).then(
+      res => {
+        this.hideModal()
+        message.success("操作成功")
+        this.getRecruitCityList()
+      }
+    ).catch(
+      e => {
+        console.log(e);
+      }
+    )
+  }
 
   getRecruitCityList() {
     getRecruitCityList({}).then(
@@ -57,9 +61,45 @@ class App extends Component {
       }
     )
   }
+  // edit
+  showModal = () => {
+    this.setState({
+      visible: true,
+    });
+  }
+  hideModal = () => {
+    const form = this.formRef.props.form;
+    form.resetFields();
+    this.setState({
+      visible: false,
+    });
+  }
+  handleCancel = () => {
+    this.hideModal()
+  }
+
+  handleCreate = () => {
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      if (err) {
+        return;
+      }
+      let params = form.getFieldsValue()
+      this.createOrUpdateRecruitCity(params)
+      // this.hideModal()
+    });
+  }
+
+  cancel(e) {
+    message.error('Click on No');
+  }
+  saveFormRef = (formRef) => {
+    this.formRef = formRef;
+  }
   render() {
     const columns = [{
       title: 'ID',
+      hidden: true,
       dataIndex: 'id',
       key: 'id',
     },
@@ -67,6 +107,7 @@ class App extends Component {
       title: 'name',
       dataIndex: 'name',
       key: 'name',
+      required: true,
     },
     {
       title: 'sort',
@@ -76,12 +117,20 @@ class App extends Component {
     {
       title: 'Action',
       key: 'action',
+      hidden: true,
       render: (text, record) => {
         return (
           <span>
             <Button type="primary" onClick={this.showModal}>编辑</Button>
             <Divider type="vertical" />
-            <Button type="danger" onClick={() => { this.handleDel() }}>删除</Button>
+            <Popconfirm
+              title="确认删除这条数据"
+              onConfirm={() => this.handleDel()}
+              onCancel={() => this.cancel()}
+              okText="确定"
+              cancelText="取消">
+              <Button type="danger" >删除</Button>
+            </Popconfirm>
           </span>
         )
       },
@@ -90,18 +139,13 @@ class App extends Component {
     return (
       <div>
         <Table columns={columns} dataSource={this.state.data} rowKey="id" />
-        <Modal
-          title="Modal"
+        <Edit
+          wrappedComponentRef={this.saveFormRef}
+          columns={columns}
           visible={this.state.visible}
-          onOk={this.hideModal}
-          onCancel={this.hideModal}
-          okText="确认"
-          cancelText="取消"
-        >
-          <p>Bla bla ...</p>
-          <p>Bla bla ...</p>
-          <p>Bla bla ...</p>
-        </Modal>
+          onCancel={this.handleCancel}
+          onCreate={this.handleCreate}>
+        </Edit>
       </div>
     )
   }

@@ -21,10 +21,11 @@ class App extends Component {
   render() {
     return (<Menu
       onClick={this.handleClick}
-      style={{ width: 256 }}
+      style={{ width: 200 }}
       defaultSelectedKeys={['1']}
       defaultOpenKeys={['sub1']}
-      className="Sidebar"
+      theme="dark"
+      className="sidebar"
       mode="inline"
     >
       <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>

@@ -10,5 +10,5 @@ export function createOrUpdateRecruitCity(params) {
 }
 
 export function delRecruitCity(params) {
-  return request.post(baseUrl + '/city/delete', params);
+  return request.post(baseUrl + '/city/save', params);
 }
